@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Principal</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'principal/index.css' %}">
+
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div id="botao-nav">Meus projetos</div>
+            </nav>
+        </header>
+        <section class="container">
+            <div class="sobre-esq">
+                <h1 class="titulo">SOBRE MIM</h1>
+                <br>
+                <p class="texto"> Me chamo Bruno Lins dos Santos Viana e atualmente estou fazendo o curso de Tecnologia em Análise e Desenvolvimento de Sistemas pelo Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte.</p>
+            </div>
+            <div class="sobre-dir">
+                <img id="foto" src="{% static 'imgs/principal/bruno_foto.jpg' %}">
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-esq">
+                <a class="titulo" href="{% url 'enquetes:index' %}">Aplicação de Enquetes</a>
+                <br>
+            </div>
+            <div class="container-dir">
+
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-esq">
+                <a class="titulo" href="{% url 'simulado:index' %}">Simulado</a>
+                <br>
+                <p class="texto">Projeto da disciplina de Desenvolvimento Web dedicado a criação de uma plataforma que permite o cadastro de usuários, questões, alternativas e simulados, além da funcionalidade de responde-los.</p>
+            </div>
+            <div class="container-dir">
+                <img src="{% static 'imgs/principal/Flamengo.jpg' %}">
+
+            </div>
+        </section>
+    </body>
+</html>
