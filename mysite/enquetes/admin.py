@@ -3,6 +3,10 @@ from .models import Question, Choice
 
 # Register your models here.
 
+
+
+admin.site.site_header = 'Administração DSWeb 2023.1'
+
 class ChoiceInLine(admin.TabularInline):
     model = Choice
     extra = 2

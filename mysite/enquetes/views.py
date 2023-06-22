@@ -10,7 +10,7 @@ from django.http import Http404
 
 # Create your views here.
 class IndexView(generic.ListView):
-    template_name = "index.html"
+    template_name = "enquetes/index.html"
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
@@ -19,11 +19,11 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "detail.html"
+    template_name = "enquetes/question_detail.html"
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = "results.html"
+    template_name = "enquetes/results.html"
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
