@@ -2,20 +2,24 @@ from django.contrib import admin
 from .models import Question, Choice
 
 # Register your models here.
+
+class ChoiceInLine(admin.TabularInline):
+    model = Choice
+    extra = 2
+
+
+
+
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['question_text']}),
         ('Date information', {'fields': ['pubdate']}),
     ]
-
-class ChoiceAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['choice_text']}),
-        ('Votos', {'fields': ['votes']}),
-    ]
-
+    inlines = [ChoiceInLine]
+    list_display = ('question_text', 'id', 'pubdate', 'was_published_recently')
+    list_filter = ['pubdate']
+    search_fields = ['question_text']
 
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice, ChoiceAdmin)
