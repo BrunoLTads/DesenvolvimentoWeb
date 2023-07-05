@@ -1,26 +1,34 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
 
+def pontuacao_certa(value):
+    if (value < 0 or value > 100):
+        raise ValidationError(str(value) + " não é um valor adequado. Por favor, selecione um número entre 0 e 100")
 
+class Tema(models.Model):
+    nome = models.CharField(max_length=50)
 
 class Simulado(models.Model):
-    simulado_nome = models.CharField(max_length=100)
-    simulado_data = models.DateTimeField("data criada")
-    tema = models.CharField(max_length=200)
+    nome = models.CharField(max_length=100)
+    data_criacao = models.DateTimeField("data criada")
+    tema = models.ForeignKey(Tema, on_delete=models.SET_NULL, null=True)
 
 
 class Questao(models.Model):
-    questao_texto = models.CharField(max_length=200)
-    questao_data = models.DateTimeField("data publicada")
-    pontuacao = models.PositiveIntegerField(default=0, max_length=3)
-    simulado = models.ForeignKey(Simulado, on_delete=models.SET_NULL, null=True)
+    enunciado = models.CharField("enunciado", max_length=200)
+    pontuacao = models.PositiveIntegerField(default=0, validators=[pontuacao_certa])
+    #simulado = models.ForeignKey(Simulado, on_delete=models.SET_NULL, null=True)
+
 
 
 class Alternativa(models.Model):
     alternativa_texto = models.CharField(max_length=200)
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+
+
 
 
 
