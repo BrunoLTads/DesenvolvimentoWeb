@@ -22,7 +22,21 @@ class QuestaoAdmin(admin.ModelAdmin):
     search_fields = ['enunciado']
 
 
+class SimuladoAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['nome']}),
+        ('Data de criação', {'fields': ['data_criacao']}),
+        ('Tema', {'fields': ['tema']}),
+        ('Questões', {'fields': ['questao']}),
+    ]
+
+    list_display = ('nome', 'tema', 'data_criacao', 'id')
+    list_filter = ['tema']
+    search_fields = ['nome']
+
+
+
 
 admin.site.register(Questao, QuestaoAdmin)
 admin.site.register(Tema)
-admin.site.register(Simulado)
+admin.site.register(Simulado, SimuladoAdmin)
