@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Simulado, Questao, Alternativa
+from .models import Tema, Simulado, Questao, Alternativa
 
 # Register your models here.
 admin.site.site_header = 'Administração Simulado'
@@ -13,15 +13,16 @@ class AlternativaInLine(admin.TabularInline):
 
 class QuestaoAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['questao_texto']}),
-        ('Date information', {'fields': ['questao_data']}),
+        (None, {'fields': ['enunciado']}),
         ('Pontuação', {'fields': ['pontuacao']}),
     ]
     inlines = [AlternativaInLine]
-    list_display = ('questao_texto', 'id', 'questao_data')
-    list_filter = ['questao_data']
-    search_fields = ['questao_texto']
+    list_display = ('enunciado', 'id')
+    #list_filter = ['questao_data']
+    search_fields = ['enunciado']
 
 
 
 admin.site.register(Questao, QuestaoAdmin)
+admin.site.register(Tema)
+admin.site.register(Simulado)

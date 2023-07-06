@@ -20,12 +20,13 @@ class Simulado(models.Model):
 class Questao(models.Model):
     enunciado = models.CharField("enunciado", max_length=200)
     pontuacao = models.PositiveIntegerField(default=0, validators=[pontuacao_certa])
-    #simulado = models.ForeignKey(Simulado, on_delete=models.SET_NULL, null=True)
+    simulado = models.ForeignKey(Simulado, on_delete=models.SET_NULL, null=True)
 
 
 
 class Alternativa(models.Model):
     alternativa_texto = models.CharField(max_length=200)
+    alternativa_correta = models.int
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
 
 
