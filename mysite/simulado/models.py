@@ -17,6 +17,7 @@ class Tema(models.Model):
 class Questao(models.Model):
     enunciado = models.CharField("enunciado", max_length=200)
     pontuacao = models.PositiveIntegerField(default=0, validators=[pontuacao_certa])
+    tema = models.ForeignKey(Tema, on_delete=models.SET_DEFAULT, default=3)
 
     def __str__(self):
         return self.enunciado

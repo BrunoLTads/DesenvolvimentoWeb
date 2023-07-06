@@ -14,6 +14,7 @@ class AlternativaInLine(admin.TabularInline):
 class QuestaoAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['enunciado']}),
+        ('Tema', {'fields': ['tema']}),
         ('Pontuação', {'fields': ['pontuacao']}),
     ]
     inlines = [AlternativaInLine]
