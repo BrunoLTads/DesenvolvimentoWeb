@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -37,6 +38,9 @@ class Alternativa(models.Model):
     alternativa_correta = models.BooleanField(default=False)
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
 
+class Estudante(models.Model):
+    tema_favorito = models.ForeignKey(Tema, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 

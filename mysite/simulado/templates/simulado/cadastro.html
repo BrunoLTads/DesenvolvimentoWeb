@@ -1,0 +1,122 @@
+<h1>Cadastro</h1>
+
+<div>
+    <h1 class="m-auto py-5 text-center d-flex flex-column">
+      <b>Formulário de cadastro</b>
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <form
+          class="needs-validation"
+          action="{% url 'simulado:registrar' %}"
+          method="POST"
+          enctype="multipart/form-data">
+          {%csrf_token%}
+          <h4>Crie sua conta</h4>
+          <div class="row g-3">
+            <div class="col-sm-12">
+              <label
+                for="username"
+                class="form-label"
+                >Nome de Usuário</label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control {% if error.field == 'username' %} is-invalid {% endif %}"
+                  id="username"
+                  name="username"
+                  value="{{user_form.username}}"
+                  placeholder="bruno2023"
+                  required />
+                <div class="invalid-feedback">{{error.message}}</div>
+              </div>
+            </div>
+  
+            <div class="col-6">
+              <label
+                for="password"
+                class="form-label"
+                >Senha
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                value="{{user_form.password}}"
+                placeholder="******" />
+            </div>
+            <div class="col-6">
+              <label
+                for="password-confirmation"
+                class="form-label"
+                >Confirme sua senha
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="password-confirmation"
+                name="password-confirmation"
+                placeholder="******" />
+            </div>
+          </div>
+          <hr class="my-4" />
+          <h4>Sobre você</h4>
+          <div class="row g-3">
+  
+            <div class="col-7">
+              <label
+                for="email"
+                class="form-label"
+                >E-mail</label
+              >
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control {% if error.field == 'email' %} is-invalid {% endif %}"
+                  id="email"
+                  name="email"
+                  value="{{user_form.email}}"
+                  placeholder="seuemail@exemplo.com"
+                  required />
+                <div class="invalid-feedback">{{error.message}}</div>
+              </div>
+            </div>
+
+            <div class="col-6">
+                <label
+                  for="tema_favorito"
+                  class="form-label"
+                  >Tema Favorito</label
+                >
+                <select
+                  class="form-select"
+                  id="tema_favorito"
+                  name="tema_favorito"
+                  value="{{estudante_form.tema_favorito}}"
+                  
+                  >
+                    <option value="">Escolha...</option>
+                    {% for tema in tema_favorito_select %}
+                    <option value="{{ tema.id }}" {% if estudante_form.tema_favorito == tema.id %}selected{% endif %}>{{ tema.nome }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                  Escolha seu tema favorito.
+                </div>
+  
+  
+          <hr class="my-4" />
+  
+          <button
+            type="submit"
+            class="btn btn-primary">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  

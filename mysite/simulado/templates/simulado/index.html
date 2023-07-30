@@ -6,5 +6,26 @@
         <h1>Simulado Online</h1>
         <hr/>
         &copy; DSWeb/TADS/CNAT/IFRN 2023
+
+
+
+        <a
+        href="{% url 'simulado:registrar' %}"
+        class="btn btn-outline-primary"
+        >Cadastro</a
+      >
+
+        <a
+        href="{% url 'simulado:login' %}"
+        class="btn btn-outline-primary"
+        >Login</a
+      >
+    {% if user.is_authenticated %}
+      <a
+      href="{% url 'simulado:logout' %}"
+      class="btn btn-outline-primary"
+      >Logout</a
+    >
+    {% endif %}
     </body>
 </html>
