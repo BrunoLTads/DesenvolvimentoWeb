@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{simulado.nome}}</h1>
+    <h3>Criado em: {{simulado.data_criacao}}</h3>
+    <h3>Tema: {{simulado.tema}}</h3>
+    <br>
+    <br>
+    <br>
+    <h2>Questões:</h2>
+    {% for questao in simulado.questao.all %}
+    <h3>{{ questao.enunciado }}</h3>
+        {% for alternativa in questao.alternativa_set.all %}
+            <p>{{ alternativa.alternativa_texto }}</p>
+        {% endfor %}
+    {% endfor %}
+
+</body>
+</html>

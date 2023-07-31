@@ -8,7 +8,22 @@
         &copy; DSWeb/TADS/CNAT/IFRN 2023
 
 
+      {% if user.is_authenticated %}
+      
+      <a
+      href="{% url 'simulado:logout' %}"
+      class="btn btn-outline-primary"
+      >Logout</a
+    >
 
+    <a
+      href="{% url 'simulado:adicionar_questao' %}"
+      class="btn btn-outline-primary"
+      >Adicionar questao</a
+    >
+
+      {% else %}
+      <br>
         <a
         href="{% url 'simulado:registrar' %}"
         class="btn btn-outline-primary"
@@ -20,12 +35,12 @@
         class="btn btn-outline-primary"
         >Login</a
       >
-    {% if user.is_authenticated %}
+
       <a
-      href="{% url 'simulado:logout' %}"
+      href="{% url 'simulado:adicionar_questao' %}"
       class="btn btn-outline-primary"
-      >Logout</a
+      >Adicionar questao</a
     >
-    {% endif %}
+      {% endif %}
     </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>SIMULADOS:</h1>
+
+    <form method="get" action="{% url 'simulado:listar_simulados' %}">
+        <input type="text" name="q" placeholder="Digite o termo de pesquisa">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <div>
+        {% for simulado in simulados %}
+        <a href="{% url 'simulado:detalhar_simulados' simulado.id %}">{{simulado.nome}}</a>
+        <br>
+        {% endfor %}
+    </div>
+</body>
+</html>

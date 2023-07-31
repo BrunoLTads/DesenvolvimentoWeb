@@ -1,10 +1,15 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
+from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
+from django.contrib.auth.decorators import login_required
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from .models import Estudante, Tema, Alternativa, Simulado, Questao
+import datetime
 
 
 
@@ -14,6 +19,29 @@ from .models import Estudante, Tema, Alternativa, Simulado, Questao
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'simulado/index.html')
+
+
+class ListarSimuladosView(View):
+    def get(self, request, *args, **kwargs):
+        simulados = Simulado.objects.all()
+        termo_pesquisa = request.GET.get('q', None)
+
+        if termo_pesquisa:
+            simulados = simulados.filter(nome__icontains=termo_pesquisa)
+        return render(request, 'simulado/listar_simulados.html', {'simulados': simulados})
+
+
+
+class DetalharSimuladosView(DetailView):
+    model = Simulado
+    template_name = 'simulado/detalhar_simulado.html'
+    context_object_name = 'simulado'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        detalhe = Simulado.objects.filter(id=self.kwargs.get('id'))
+        return super().get_context_data(**kwargs)
 
 
 class CadastrarEstudanteView(View):
@@ -99,3 +127,29 @@ class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return render(request, 'simulado/index.html')
+
+class AdicionarQuestaoView(View):
+    @method_decorator(login_required(login_url='/simulado/login', redirect_field_name=None))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        tema_select = Tema.objects.all()
+        return render(request, 'simulado/adicionar_questao.html', {'tema_select':tema_select})
+    
+    def post(self, request, *args, **kwargs):
+        questao_form = {
+            'enunciado': request.POST['enunciado'],
+            'pontuacao': request.POST['pontuacao'],
+            'tema': request.POST['tema'],
+        }
+        tema_select = Tema.nome.field.choices
+
+        questao_form['tema'] = Tema.objects.get(pk=questao_form['tema'])
+
+        Questao.objects.create(**questao_form)
+
+        return redirect(reverse('simulado:index'))
+
+
+    

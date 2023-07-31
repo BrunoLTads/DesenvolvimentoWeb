@@ -7,4 +7,7 @@ urlpatterns = [
     path('cadastro/', views.CadastrarEstudanteView.as_view(), name='registrar'),
     path('login/', views.login_usuarioView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('simulados/', views.ListarSimuladosView.as_view(), name='listar_simulados'),
+    path('detalhar/<int:pk>/', views.DetalharSimuladosView.as_view(), name='detalhar_simulados'),
+    path('adicionar/questao/', views.AdicionarQuestaoView.as_view(), name='adicionar_questao'),
 ]
