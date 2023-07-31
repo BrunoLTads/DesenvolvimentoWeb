@@ -1,0 +1,30 @@
+<h1>Criação de simulado</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="nome">Nome do Simulado:</label>
+    <input type="text" name="nome" required>
+    <br>
+    <label for="data_criacao">Data de Criação:</label>
+    <input type="date" name="data_criacao" required>
+    <br>
+    <label for="tema">Tema:</label>
+    <select name="tema" required>
+        {% for tema in tema_select %}
+            <option value="{{ tema.id }}">{{ tema.nome }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <br>
+    <h3>Questões Disponíveis:</h3>
+    <ul>
+        {% for questao in questoes_disponiveis %}
+            <li>
+                <input type="checkbox" name="questoes[]" value="{{ questao.id }}">
+                {{ questao.enunciado }} - Pontuação:
+                <input type="number" name="pontuacao_{{ questao.id }}" value="{{ questao.pontuacao }}">
+            </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <input type="submit" value="Adicionar Simulado">
+</form>

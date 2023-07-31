@@ -8,7 +8,7 @@
       <div class="col-6">
         <form
           class="needs-validation"
-          action="{% url 'simulado:registrar' %}"
+          action="{% url 'simulado:adicionar_questao' %}"
           method="POST"
           enctype="multipart/form-data">
           {%csrf_token%}
@@ -68,18 +68,28 @@
                     <option value="{{ tema.id }}" {% if questao_form.tema == tema.id %}selected{% endif %}>{{ tema.nome }}</option>
                     {% endfor %}
                 </select>
-                <div class="invalid-feedback">
-                  Escolha o tema da questão
-                </div>
+                <br>
+                <br>
   
   
-          <hr class="my-4" />
-  
-          <button
-            type="submit"
-            class="btn btn-primary">
-            Cadastrar
-          </button>
+                <label for="alternativa_texto_1">Alternativa 1:</label>
+                <input type="text" name="alternativa_texto_1" required>
+                <input type="radio" name="alternativa_correta" value="1"> Correta
+                <br>
+                <label for="alternativa_texto_2">Alternativa 2:</label>
+                <input type="text" name="alternativa_texto_2" required>
+                <input type="radio" name="alternativa_correta" value="2"> Correta
+                <br>
+                <label for="alternativa_texto_3">Alternativa 3:</label>
+                <input type="text" name="alternativa_texto_3" required>
+                <input type="radio" name="alternativa_correta" value="3"> Correta
+                <br>
+                <label for="alternativa_texto_4">Alternativa 4:</label>
+                <input type="text" name="alternativa_texto_4" required>
+                <input type="radio" name="alternativa_correta" value="4"> Correta
+                <br>
+    <br>
+    <input type="submit" value="Adicionar Questão e Alternativas">
         </form>
       </div>
     </div>

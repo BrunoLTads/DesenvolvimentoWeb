@@ -10,4 +10,5 @@ urlpatterns = [
     path('simulados/', views.ListarSimuladosView.as_view(), name='listar_simulados'),
     path('detalhar/<int:pk>/', views.DetalharSimuladosView.as_view(), name='detalhar_simulados'),
     path('adicionar/questao/', views.AdicionarQuestaoView.as_view(), name='adicionar_questao'),
+    path('adicionar/simulado/', views.AdicionarSimuladoView.as_view(), name='adicionar_simulado'),
 ]
