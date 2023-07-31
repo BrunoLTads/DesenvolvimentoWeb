@@ -15,7 +15,7 @@
 
     <div>
         {% for simulado in simulados %}
-        <a href="{% url 'simulado:detalhar_simulados' simulado.id %}">{{simulado.nome}}</a>
+        <a href="{% url 'simulado:detalhar_simulado' simulado.id %}">{{simulado.nome}}</a>
         <br>
         {% endfor %}
     </div>

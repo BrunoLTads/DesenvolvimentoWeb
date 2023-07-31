@@ -197,21 +197,49 @@ class AdicionarSimuladoView(View):
 
         return redirect(reverse('simulado:index'))
 
-class DetalharSimuladosView(DetailView):
-    model = Simulado
+class DetalharSimuladosView(View):
     template_name = 'simulado/detalhar_simulado.html'
-    context_object_name = 'simulado'
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
+        # Obtém o simulado a partir do ID na URL
+        simulado_id = self.kwargs.get('pk')
+        simulado = Simulado.objects.get(pk=simulado_id)
+
+        # Exibe o formulário com as questões e alternativas do simulado
+        return render(request, self.template_name, {'simulado': simulado})
+
+    def post(self, request, *args, **kwargs):
+        # Obtém o simulado a partir do ID na URL
+        simulado_id = self.kwargs.get('pk')
+        simulado = Simulado.objects.get(pk=simulado_id)
+
+        # Inicializa variáveis para armazenar as respostas do usuário
+        respostas_corretas = 0
+        nota_obtida = 0
+
+        # Processa as respostas do usuário
+        for questao in simulado.questao.all():
+            alternativa_id = request.POST.get(f'questao_{questao.id}', None)
+            if alternativa_id:
+                alternativa = Alternativa.objects.get(pk=alternativa_id)
+                if alternativa.alternativa_correta:
+                    respostas_corretas += 1
+                    nota_obtida += questao.pontuacao
 
         # Calcula a nota máxima do simulado somando a pontuação de todas as questões
-        nota_maxima = self.object.questao.aggregate(Sum('pontuacao'))['pontuacao__sum']
+        nota_maxima = simulado.questao.aggregate(Sum('pontuacao'))['pontuacao__sum']
 
-        # Adiciona a nota máxima ao contexto
-        context['nota_maxima'] = nota_maxima
+        # Calcula a porcentagem de acertos
+        porcentagem_acertos = (respostas_corretas / simulado.questao.count()) * 100
 
-        return context
+        # Exibe o resultado com as respostas do usuário, as respostas corretas e a nota obtida
+        return render(request, self.template_name, {
+            'simulado': simulado,
+            'respostas_corretas': respostas_corretas,
+            'nota_obtida': nota_obtida,
+            'nota_maxima': nota_maxima,
+            'porcentagem_acertos': porcentagem_acertos,
+        })
     #for i in range(1, 5):
     #        alternativa_texto = request.POST.get(f'alternativa_texto_{i}', None)
     #        alternativa_correta = request.POST.get(f'alternativa_correta', None)#

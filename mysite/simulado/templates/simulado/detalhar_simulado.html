@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>{{simulado.nome}}</h1> <h1>Pontuação: {{nota_maxima}}</h1>
-    <h3>Criado em: {{simulado.data_criacao}}</h3>
-    <h3>Tema: {{simulado.tema}}</h3>
-    <br>
-    <br>
-    <h2>Questões:</h2>
-    {% for questao in simulado.questao.all %}
-    <h3>{{ questao.enunciado }}</h3>
-        {% for alternativa in questao.alternativa_set.all %}
-            <p>{{ alternativa.alternativa_texto }}</p>
-        {% endfor %}
-    {% endfor %}
+<h1>Detalhes do Simulado</h1>
 
-</body>
-</html>
+<p>Nome do Simulado: {{ simulado.nome }}</p>
+<p>Data de Criação: {{ simulado.data_criacao }}</p>
+<p>Tema: {{ simulado.tema }}</p>
+<p>Nota máxima: {{ nota_maxima }}</p>
+
+<h2>Questões do Simulado:</h2>
+<form method="post" action="{% url 'simulado:detalhar_simulado' simulado.id %}">
+  {% csrf_token %}
+  {% for questao in simulado.questao.all %}
+    <p>{{ questao.enunciado }}</p>
+    {% for alternativa in questao.alternativa_set.all %}
+      <input type="radio" name="questao_{{ questao.id }}" value="{{ alternativa.id }}">
+      <label>{{ alternativa.alternativa_texto }}</label><br>
+    {% endfor %}
+  {% endfor %}
+  <button type="submit">Enviar Respostas</button>
+</form>
+
+{% if respostas_corretas is not None %}
+  <h2>Resultado:</h2>
+  <p>Respostas Corretas: {{ respostas_corretas }}</p>
+  <p>Nota Obtida: {{ nota_obtida }}</p>
+  <p>Nota Máxima: {{ nota_maxima }}</p>
+  <p>Porcentagem de Acertos: {{ porcentagem_acertos }}%</p>
+{% endif %}
